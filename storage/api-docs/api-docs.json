@@ -166,7 +166,7 @@
                         }
                     },
                     "404": {
-                        "description": "User not found",
+                        "description": "Item not found",
                         "content": {
                             "application/json": {}
                         }
@@ -177,24 +177,32 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/api/items/{item}": {
+            },
             "put": {
                 "tags": [
                     "Items"
                 ],
                 "summary": "Update a item",
                 "description": "Update a item",
-                "operationId": "a1d16c822c8ec1a2f4bfd2f968d0c37b",
+                "operationId": "4ac9fb55d8a18bd1cba3a29d84f9fd4d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do item",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "name",
-                                    "id"
+                                    "name"
                                 ],
                                 "properties": {
                                     "name": {
@@ -207,9 +215,6 @@
                                         "type": "string"
                                     },
                                     "done": {
-                                        "type": "string"
-                                    },
-                                    "id": {
                                         "type": "string"
                                     }
                                 },
@@ -226,7 +231,7 @@
                         }
                     },
                     "404": {
-                        "description": "User not found",
+                        "description": "Item not found",
                         "content": {
                             "application/json": {}
                         }
@@ -332,7 +337,7 @@
                         }
                     },
                     "404": {
-                        "description": "User not found",
+                        "description": "Period not found",
                         "content": {
                             "application/json": {}
                         }
@@ -343,33 +348,38 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/api/periods/{period}": {
+            },
             "put": {
                 "tags": [
                     "Periods"
                 ],
                 "summary": "Update a period",
                 "description": "Update a period",
-                "operationId": "32cfb30a6ee03a880f1032652f75c79e",
+                "operationId": "58639cbc72a09a22b457e7a8fcc844fc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do período",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "title",
-                                    "id"
+                                    "title"
                                 ],
                                 "properties": {
                                     "title": {
                                         "type": "string"
                                     },
                                     "active": {
-                                        "type": "string"
-                                    },
-                                    "id": {
                                         "type": "string"
                                     }
                                 },
@@ -386,7 +396,7 @@
                         }
                     },
                     "404": {
-                        "description": "User not found",
+                        "description": "Period not found",
                         "content": {
                             "application/json": {}
                         }

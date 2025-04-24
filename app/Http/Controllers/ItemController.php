@@ -193,7 +193,9 @@ class ItemController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'id' => 'required'
+            'active' => 'integer',
+            'period_id' => 'integer',
+            'done' => 'integer'
         ]);
 
        
@@ -208,17 +210,26 @@ class ItemController extends Controller
 
             if($item){
 
-                $period = Period::where('user_id', $user->id)->find($request->period_id);
+                $has_period = true;
 
-                if($period){
+                if($request->period_id){
 
+                    $period = Period::where('user_id', $user->id)->find($request->period_id);
+
+                    if(!$period){
+                        $has_period = false;
+                    }
+
+                }
+
+                if($has_period){
                     $item->update($request->all());
-
                     return ApiResponse::success($item);
-
                 }else{
                     return ApiResponse::error('period_id não encontrado');
                 }
+
+
 
             }else{
                 return ApiResponse::error('Item não encontrado');

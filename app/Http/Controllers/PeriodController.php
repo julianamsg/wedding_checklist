@@ -179,7 +179,7 @@ class PeriodController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'id' => 'required'
+            'active' => 'integer'
         ]);
 
         try{
