@@ -120,7 +120,7 @@ class ItemController extends Controller
 *      ),
 *      @OA\Response(
 *          response=404,
-*          description="User not found",
+*          description="Item not found",
 *          @OA\MediaType(
 *              mediaType="application/json",
 *          )
@@ -147,21 +147,29 @@ class ItemController extends Controller
 
     /**
 *  @OA\PUT(
-*      path="/api/items/{item}",
+*      path="/api/items/{id}",
 *      summary="Update a item",
 *      description="Update a item",
 *      tags={"Items"},
 *      security={{"bearerAuth":{}}},
+*      @OA\Parameter(
+*          name="id",
+*          in="path",
+*          description="ID do item",
+*          required=true,
+*          @OA\Schema(
+*              type="integer"
+*          )
+*      ),
 *      @OA\RequestBody(
 *         required=true,
 *         @OA\JsonContent(
 *           type="object",
-*           required={"name", "id"},
+*           required={"name"},
 *           @OA\Property(property="name", type="string"),
 *           @OA\Property(property="active", type="string"),
 *           @OA\Property(property="period_id", type="string"),
-*           @OA\Property(property="done", type="string"),
-*           @OA\Property(property="id", type="string"),
+*           @OA\Property(property="done", type="string")
 *         )
 *      ),
 *      @OA\Response(
@@ -173,7 +181,7 @@ class ItemController extends Controller
 *      ),
 *      @OA\Response(
 *          response=404,
-*          description="User not found",
+*          description="Item not found",
 *          @OA\MediaType(
 *              mediaType="application/json",
 *          )
@@ -192,7 +200,7 @@ class ItemController extends Controller
 
             $user = auth()->user();
     
-            $item = Item::where('id', $request->id)
+            $item = Item::where('id', $id)
             ->whereHas('period', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })

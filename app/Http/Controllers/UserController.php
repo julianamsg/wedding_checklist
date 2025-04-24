@@ -116,20 +116,28 @@ class UserController extends Controller
 
     /**
 *  @OA\PUT(
-*      path="/api/users/{user}",
+*      path="/api/users/{id}",
 *      summary="Update a user",
 *      description="Update a user",
 *      tags={"Users"},
 *      security={{"bearerAuth":{}}},
+*      @OA\Parameter(
+*          name="id",
+*          in="path",
+*          description="ID do usuário",
+*          required=true,
+*          @OA\Schema(
+*              type="integer"
+*          )
+*      ),
 *      @OA\RequestBody(
 *         required=true,
 *         @OA\JsonContent(
 *           type="object",
+*           required={"name"},
 *           @OA\Property(property="name", type="string"),
 *           @OA\Property(property="email", type="string"),
-*           @OA\Property(property="password", type="string"),
-*           @OA\Property(property="id", type="string"),
-
+*           @OA\Property(property="password", type="string")
 *         )
 *      ),
 *      @OA\Response(
@@ -153,12 +161,10 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' .$request->id,
-            'password' => 'required',
-            'id' => 'required'
+            'email' => 'email|unique:users,email,' .$id
         ]);
 
-        $user = User::find($request->id);
+        $user = User::find($id);
 
         if($user){
 

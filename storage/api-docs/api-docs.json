@@ -192,6 +192,10 @@
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "name",
+                                    "id"
+                                ],
                                 "properties": {
                                     "name": {
                                         "type": "string"
@@ -269,6 +273,9 @@
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "title"
+                                ],
                                 "properties": {
                                     "title": {
                                         "type": "string"
@@ -351,6 +358,10 @@
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "title",
+                                    "id"
+                                ],
                                 "properties": {
                                     "title": {
                                         "type": "string"
@@ -492,21 +503,33 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/api/users/{user}": {
+            },
             "put": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Update a user",
                 "description": "Update a user",
-                "operationId": "e29fc231c7937ab09483d35e6e3d1214",
+                "operationId": "b9091397c8b25f12c6adb74be6ce3a5a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "name"
+                                ],
                                 "properties": {
                                     "name": {
                                         "type": "string"
@@ -515,9 +538,6 @@
                                         "type": "string"
                                     },
                                     "password": {
-                                        "type": "string"
-                                    },
-                                    "id": {
                                         "type": "string"
                                     }
                                 },

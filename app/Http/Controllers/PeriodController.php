@@ -111,7 +111,7 @@ class PeriodController extends Controller
 *      ),
 *      @OA\Response(
 *          response=404,
-*          description="User not found",
+*          description="Period not found",
 *          @OA\MediaType(
 *              mediaType="application/json",
 *          )
@@ -119,36 +119,43 @@ class PeriodController extends Controller
 *
 *  )
 */
-public function show(string $id)
-{
+    public function show(string $id)
+    {
 
-    $user_id = auth()->id();
-    
-    $period = Period::where('user_id', $user_id)->find($id);
+        $user_id = auth()->id();
+        
+        $period = Period::where('user_id', $user_id)->find($id);
 
-    if($period){
-        return ApiResponse::success($period);
+        if($period){
+            return ApiResponse::success($period);
+        }
+
+        return ApiResponse::error('Período não encontrado');
     }
-
-    return ApiResponse::error('Período não encontrado');
-}
 
     /**
 *  @OA\PUT(
-*      path="/api/periods/{period}",
+*      path="/api/periods/{id}",
 *      summary="Update a period",
 *      description="Update a period",
 *      tags={"Periods"},
 *      security={{"bearerAuth":{}}},
+*      @OA\Parameter(
+*          name="id",
+*          in="path",
+*          description="ID do período",
+*          required=true,
+*          @OA\Schema(
+*              type="integer"
+*          )
+*      ),
 *      @OA\RequestBody(
 *         required=true,
 *         @OA\JsonContent(
 *           type="object",
-*           required={"title", "id"},
+*           required={"title"},
 *           @OA\Property(property="title", type="string"),
-*           @OA\Property(property="active", type="string"),
-*           @OA\Property(property="id", type="string"),
-
+*           @OA\Property(property="active", type="string")
 *         )
 *      ),
 *      @OA\Response(
@@ -160,7 +167,7 @@ public function show(string $id)
 *      ),
 *      @OA\Response(
 *          response=404,
-*          description="User not found",
+*          description="Period not found",
 *          @OA\MediaType(
 *              mediaType="application/json",
 *          )
@@ -179,7 +186,7 @@ public function show(string $id)
 
             $user_id = auth()->id();
     
-            $period = Period::where('user_id', $user_id)->findOrFail($request->id);
+            $period = Period::where('user_id', $user_id)->findOrFail($id);
 
             $period->update($request->all());
 
@@ -192,6 +199,4 @@ public function show(string $id)
 
         }
     }
-
-   
 }
