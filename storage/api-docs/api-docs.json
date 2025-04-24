@@ -1,10 +1,393 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Weeding",
+        "title": "Wedding Checklist",
         "version": "0.1"
     },
     "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Login/Logout"
+                ],
+                "summary": "Login",
+                "description": "Login",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "delete": {
+                "tags": [
+                    "Login/Logout"
+                ],
+                "summary": "Revoke all users tokens",
+                "description": "Revoke all users tokens",
+                "operationId": "fd694301e769d83fdd749695a3cc435b",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/items": {
+            "get": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Get all items",
+                "description": "Get all items",
+                "operationId": "2cbf07eb95d033f8775c36424ac8fa06",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Create a item",
+                "description": "Create a item",
+                "operationId": "af37857663e6805dd367a55f374c9ee1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "period_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "string"
+                                    },
+                                    "period_id": {
+                                        "type": "string"
+                                    },
+                                    "done": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/items/{id}": {
+            "get": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Get item by id",
+                "description": "Get item by id",
+                "operationId": "7f1ffbd9fa2b704c61ebcccb636ebb27",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/items/{item}": {
+            "put": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Update a item",
+                "description": "Update a item",
+                "operationId": "a1d16c822c8ec1a2f4bfd2f968d0c37b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "string"
+                                    },
+                                    "period_id": {
+                                        "type": "string"
+                                    },
+                                    "done": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/periods": {
+            "get": {
+                "tags": [
+                    "Periods"
+                ],
+                "summary": "Get all periods",
+                "description": "Get all periods",
+                "operationId": "407eb35f456d7fd3c3b06c831330a049",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Periods"
+                ],
+                "summary": "Create a period",
+                "description": "Create a period",
+                "operationId": "dbc9468909395eff419eca6c5195eb97",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/periods/{id}": {
+            "get": {
+                "tags": [
+                    "Periods"
+                ],
+                "summary": "Get period by id",
+                "description": "Get period by id",
+                "operationId": "5c9c051f84d014667c6a73ee1f35f3c5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/periods/{period}": {
+            "put": {
+                "tags": [
+                    "Periods"
+                ],
+                "summary": "Update a period",
+                "description": "Update a period",
+                "operationId": "32cfb30a6ee03a880f1032652f75c79e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/users": {
             "get": {
                 "tags": [
@@ -20,7 +403,12 @@
                             "application/json": {}
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -29,32 +417,27 @@
                 "summary": "Create a user",
                 "description": "Create a user",
                 "operationId": "592819a0265360b2014512d6dbfaf0e7",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "name",
-                        "required": true
-                    },
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "email",
-                        "required": true
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "Password",
-                        "required": true
-                    },
-                    {
-                        "name": "active",
-                        "in": "query",
-                        "description": "Active",
-                        "required": false
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -62,7 +445,12 @@
                             "application/json": {}
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/users/{id}": {
@@ -78,7 +466,11 @@
                         "name": "id",
                         "in": "path",
                         "description": "id",
-                        "required": true
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
                     }
                 ],
                 "responses": {
@@ -94,7 +486,12 @@
                             "application/json": {}
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/users/{user}": {
@@ -105,32 +502,30 @@
                 "summary": "Update a user",
                 "description": "Update a user",
                 "operationId": "e29fc231c7937ab09483d35e6e3d1214",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "name",
-                        "required": false
-                    },
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "email",
-                        "required": true
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "Password",
-                        "required": true
-                    },
-                    {
-                        "name": "active",
-                        "in": "query",
-                        "description": "Active",
-                        "required": false
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -144,7 +539,12 @@
                             "application/json": {}
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/findUserEmail": {
@@ -176,11 +576,40 @@
                             "application/json": {}
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Access token autentication",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },
     "tags": [
+        {
+            "name": "Login/Logout",
+            "description": "Login/Logout"
+        },
+        {
+            "name": "Items",
+            "description": "Items"
+        },
+        {
+            "name": "Periods",
+            "description": "Periods"
+        },
         {
             "name": "Users",
             "description": "Users"

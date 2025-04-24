@@ -14,6 +14,7 @@ class UserController extends Controller
 *      summary="Get all users",
 *      description="Get all users",
 *      tags={"Users"},
+*      security={{"bearerAuth":{}}},
 *      @OA\Response(
 *          response=200,
 *          description="OK",
@@ -35,29 +36,15 @@ class UserController extends Controller
 *      summary="Create a user",
 *      description="Create a user",
 *      tags={"Users"},
-*      @OA\Parameter(
-*         name="name",
-*         in="query",
-*         description="name",
+*      security={{"bearerAuth":{}}},
+*      @OA\RequestBody(
 *         required=true,
-*      ),
-*     @OA\Parameter(
-*         name="email",
-*         in="query",
-*         description="email",
-*         required=true,
-*      ),
-*     @OA\Parameter(
-*         name="password",
-*         in="query",
-*         description="Password",
-*         required=true,
-*      ),
-*     @OA\Parameter(
-*         name="active",
-*         in="query",
-*         description="Active",
-*         required=false,
+*         @OA\JsonContent(
+*           type="object",
+*           @OA\Property(property="name", type="string"),
+*           @OA\Property(property="email", type="string"),
+*           @OA\Property(property="password", type="string"),
+*         )
 *      ),
 *      @OA\Response(
 *          response=200,
@@ -73,7 +60,7 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required'
         ]);
 
@@ -88,11 +75,16 @@ class UserController extends Controller
 *      summary="Get user by id",
 *      description="Get user by id",
 *      tags={"Users"},
+*      security={{"bearerAuth":{}}},
 *      @OA\Parameter(
 *         name="id",
 *         in="path",
 *         description="id",
 *         required=true,
+*         @OA\Schema(
+*               type="integer",
+*               format="int64"
+*         )
 *      ),
 *      @OA\Response(
 *          response=200,
@@ -128,29 +120,17 @@ class UserController extends Controller
 *      summary="Update a user",
 *      description="Update a user",
 *      tags={"Users"},
-*      @OA\Parameter(
-*         name="name",
-*         in="query",
-*         description="name",
-*         required=false,
-*      ),
-*     @OA\Parameter(
-*         name="email",
-*         in="query",
-*         description="email",
+*      security={{"bearerAuth":{}}},
+*      @OA\RequestBody(
 *         required=true,
-*      ),
-*     @OA\Parameter(
-*         name="password",
-*         in="query",
-*         description="Password",
-*         required=true,
-*      ),
-*     @OA\Parameter(
-*         name="active",
-*         in="query",
-*         description="Active",
-*         required=false,
+*         @OA\JsonContent(
+*           type="object",
+*           @OA\Property(property="name", type="string"),
+*           @OA\Property(property="email", type="string"),
+*           @OA\Property(property="password", type="string"),
+*           @OA\Property(property="id", type="string"),
+
+*         )
 *      ),
 *      @OA\Response(
 *          response=200,
@@ -173,11 +153,12 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email' .$id,
-            'password' => 'required'
+            'email' => 'required|email|unique:users,email,' .$request->id,
+            'password' => 'required',
+            'id' => 'required'
         ]);
 
-        $user = User::find($id);
+        $user = User::find($request->id);
 
         if($user){
 
@@ -196,6 +177,7 @@ class UserController extends Controller
 *      summary="Get user by email",
 *      description="Get user by email",
 *      tags={"Users"},
+*      security={{"bearerAuth":{}}},
 *      @OA\Parameter(
 *         name="email",
 *         in="query",
